@@ -3,6 +3,7 @@
 A comprehensive AI-powered business analytics dashboard built with Flask, featuring real-time data visualization, machine learning insights, and interactive AI chat capabilities.
 
 ## 🚀 Features
+<img width="1316" height="930" alt="Screenshot 2025-08-05 at 1 04 09 PM" src="https://github.com/user-attachments/assets/379deb76-db00-4bc9-975b-c6198668e99d" />
 
 ### 📊 **Main Dashboard**
 - Real-time business metrics and KPIs
