@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Dashboard - Business Analytics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <i class="fas fa-brain text-2xl mr-3"></i>
+                    <h1 class="text-xl font-bold">AI Dashboard</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="/" class="hover:text-gray-200 transition">Dashboard</a>
+                    <a href="/analytics" class="hover:text-gray-200 transition">Analytics</a>
+                    <a href="/predictions" class="hover:text-gray-200 transition">Predictions</a>
+                    <a href="/ai-chat" class="hover:text-gray-200 transition">AI Chat</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Header -->
+        <div class="mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-2">Business Analytics Dashboard</h2>
+            <p class="text-gray-600">AI-powered insights and real-time analytics</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <div class="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg p-6">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-white bg-opacity-20">
+                        <i class="fas fa-dollar-sign text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm opacity-90">Total Sales</p>
+                        <p class="text-2xl font-bold" id="total-sales">Loading...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-green-600 to-blue-600 text-white rounded-lg p-6">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-white bg-opacity-20">
+                        <i class="fas fa-users text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm opacity-90">Total Users</p>
+                        <p class="text-2xl font-bold" id="total-users">Loading...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-yellow-600 to-orange-600 text-white rounded-lg p-6">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-white bg-opacity-20">
+                        <i class="fas fa-chart-line text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm opacity-90">Conversion Rate</p>
+                        <p class="text-2xl font-bold" id="conversion-rate">Loading...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">Sales Trend</h3>
+                <div id="sales-chart" class="h-80"></div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">User Growth</h3>
+                <div id="users-chart" class="h-80"></div>
+            </div>
+        </div>
+
+        <!-- AI Insights Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <div class="flex items-center mb-4">
+                    <i class="fas fa-lightbulb text-yellow-500 text-xl mr-3"></i>
+                    <h3 class="text-lg font-semibold text-gray-900">Sales Insights</h3>
+                </div>
+                <div id="sales-insights" class="space-y-3">
+                    <div class="animate-pulse">
+                        <div class="h-4 bg-gray-200 rounded mb-2"></div>
+                        <div class="h-4 bg-gray-200 rounded mb-2"></div>
+                        <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <div class="flex items-center mb-4">
+                    <i class="fas fa-users text-blue-500 text-xl mr-3"></i>
+                    <h3 class="text-lg font-semibold text-gray-900">User Insights</h3>
+                </div>
+                <div id="users-insights" class="space-y-3">
+                    <div class="animate-pulse">
+                        <div class="h-4 bg-gray-200 rounded mb-2"></div>
+                        <div class="h-4 bg-gray-200 rounded mb-2"></div>
+                        <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <div class="flex items-center mb-4">
+                    <i class="fas fa-robot text-green-500 text-xl mr-3"></i>
+                    <h3 class="text-lg font-semibold text-gray-900">AI Performance</h3>
+                </div>
+                <div id="ai-insights" class="space-y-3">
+                    <div class="animate-pulse">
+                        <div class="h-4 bg-gray-200 rounded mb-2"></div>
+                        <div class="h-4 bg-gray-200 rounded mb-2"></div>
+                        <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load dashboard data
+        $(document).ready(function() {
+            loadStats();
+            loadCharts();
+            loadInsights();
+        });
+
+        function loadStats() {
+            $.get('/api/stats', function(data) {
+                $('#total-sales').text('$' + data.total_sales.toLocaleString());
+                $('#total-users').text(data.total_users.toLocaleString());
+                $('#conversion-rate').text(data.avg_conversion + '%');
+            });
+        }
+
+        function loadCharts() {
+            // Sales chart
+            $.get('/api/chart/line?data_type=sales', function(data) {
+                Plotly.newPlot('sales-chart', JSON.parse(data.chart_data));
+            });
+
+            // Users chart
+            $.get('/api/chart/line?data_type=users', function(data) {
+                Plotly.newPlot('users-chart', JSON.parse(data.chart_data));
+            });
+        }
+
+        function loadInsights() {
+            // Sales insights
+            $.get('/api/insights/sales', function(data) {
+                $('#sales-insights').html(`
+                    <div class="text-sm">
+                        <p class="font-semibold text-green-600">Trend: ${data.trend}</p>
+                        <p class="text-gray-600">Confidence: ${(data.confidence * 100).toFixed(1)}%</p>
+                        <p class="text-gray-700">${data.prediction}</p>
+                    </div>
+                `);
+            });
+
+            // Users insights
+            $.get('/api/insights/users', function(data) {
+                $('#users-insights').html(`
+                    <div class="text-sm">
+                        <p class="font-semibold text-blue-600">Trend: ${data.trend}</p>
+                        <p class="text-gray-600">Confidence: ${(data.confidence * 100).toFixed(1)}%</p>
+                        <p class="text-gray-700">${data.prediction}</p>
+                    </div>
+                `);
+            });
+
+            // AI insights
+            $.get('/api/insights/ai_performance', function(data) {
+                $('#ai-insights').html(`
+                    <div class="text-sm">
+                        <p class="font-semibold text-green-600">Trend: ${data.trend}</p>
+                        <p class="text-gray-600">Confidence: ${(data.confidence * 100).toFixed(1)}%</p>
+                        <p class="text-gray-700">${data.prediction}</p>
+                    </div>
+                `);
+            });
+        }
+    </script>
+</body>
+</html> 

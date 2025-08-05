@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predictions - AI Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <i class="fas fa-brain text-2xl mr-3"></i>
+                    <h1 class="text-xl font-bold">AI Dashboard</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="/" class="hover:text-gray-200 transition">Dashboard</a>
+                    <a href="/analytics" class="hover:text-gray-200 transition">Analytics</a>
+                    <a href="/predictions" class="hover:text-gray-200 transition">Predictions</a>
+                    <a href="/ai-chat" class="hover:text-gray-200 transition">AI Chat</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Header -->
+        <div class="mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-2">AI Predictions & Forecasting</h2>
+            <p class="text-gray-600">Machine learning powered predictions for business planning</p>
+        </div>
+
+        <!-- Prediction Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <div class="bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg p-6">
+                <div class="flex items-center mb-4">
+                    <i class="fas fa-chart-line text-2xl mr-3"></i>
+                    <div>
+                        <h3 class="text-lg font-semibold">Sales Forecast</h3>
+                        <p class="text-green-100 text-sm">Next 30 days</p>
+                    </div>
+                </div>
+                <div class="text-3xl font-bold mb-2">$45,230</div>
+                <div class="flex items-center text-sm">
+                    <i class="fas fa-arrow-up mr-1"></i>
+                    <span>+12.5% from last month</span>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg p-6">
+                <div class="flex items-center mb-4">
+                    <i class="fas fa-users text-2xl mr-3"></i>
+                    <div>
+                        <h3 class="text-lg font-semibold">User Growth</h3>
+                        <p class="text-blue-100 text-sm">Next quarter</p>
+                    </div>
+                </div>
+                <div class="text-3xl font-bold mb-2">2,847</div>
+                <div class="flex items-center text-sm">
+                    <i class="fas fa-arrow-up mr-1"></i>
+                    <span>+8.3% growth rate</span>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-lg p-6">
+                <div class="flex items-center mb-4">
+                    <i class="fas fa-percentage text-2xl mr-3"></i>
+                    <div>
+                        <h3 class="text-lg font-semibold">Conversion Rate</h3>
+                        <p class="text-purple-100 text-sm">Predicted</p>
+                    </div>
+                </div>
+                <div class="text-3xl font-bold mb-2">18.7%</div>
+                <div class="flex items-center text-sm">
+                    <i class="fas fa-arrow-up mr-1"></i>
+                    <span>+2.1% improvement</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prediction Charts -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">Sales Forecast</h3>
+                <div id="sales-forecast" class="h-80"></div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">User Growth Prediction</h3>
+                <div id="user-prediction" class="h-80"></div>
+            </div>
+        </div>
+
+        <!-- AI Confidence Metrics -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h3 class="text-xl font-semibold text-gray-900 mb-4">Prediction Confidence</h3>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                        <i class="fas fa-chart-line text-green-600 text-xl"></i>
+                    </div>
+                    <h4 class="font-semibold text-gray-900">Sales</h4>
+                    <p class="text-2xl font-bold text-green-600">94.2%</p>
+                    <p class="text-sm text-gray-600">Confidence</p>
+                </div>
+
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                        <i class="fas fa-users text-blue-600 text-xl"></i>
+                    </div>
+                    <h4 class="font-semibold text-gray-900">Users</h4>
+                    <p class="text-2xl font-bold text-blue-600">89.7%</p>
+                    <p class="text-sm text-gray-600">Confidence</p>
+                </div>
+
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                        <i class="fas fa-percentage text-purple-600 text-xl"></i>
+                    </div>
+                    <h4 class="font-semibold text-gray-900">Conversion</h4>
+                    <p class="text-2xl font-bold text-purple-600">87.3%</p>
+                    <p class="text-sm text-gray-600">Confidence</p>
+                </div>
+
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                        <i class="fas fa-robot text-yellow-600 text-xl"></i>
+                    </div>
+                    <h4 class="font-semibold text-gray-900">Overall</h4>
+                    <p class="text-2xl font-bold text-yellow-600">91.8%</p>
+                    <p class="text-sm text-gray-600">Accuracy</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Factors & Recommendations -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">Key Factors</h3>
+                <div class="space-y-3">
+                    <div class="flex items-center p-3 bg-blue-50 rounded-lg">
+                        <i class="fas fa-calendar text-blue-600 mr-3"></i>
+                        <div>
+                            <p class="font-medium text-gray-900">Seasonal Trends</p>
+                            <p class="text-sm text-gray-600">Q4 holiday season impact</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center p-3 bg-green-50 rounded-lg">
+                        <i class="fas fa-bullhorn text-green-600 mr-3"></i>
+                        <div>
+                            <p class="font-medium text-gray-900">Marketing Campaigns</p>
+                            <p class="text-sm text-gray-600">New digital marketing initiatives</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center p-3 bg-purple-50 rounded-lg">
+                        <i class="fas fa-star text-purple-600 mr-3"></i>
+                        <div>
+                            <p class="font-medium text-gray-900">Product Improvements</p>
+                            <p class="text-sm text-gray-600">Enhanced user experience</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center p-3 bg-yellow-50 rounded-lg">
+                        <i class="fas fa-globe text-yellow-600 mr-3"></i>
+                        <div>
+                            <p class="font-medium text-gray-900">Market Conditions</p>
+                            <p class="text-sm text-gray-600">Economic factors and competition</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">AI Recommendations</h3>
+                <div class="space-y-3">
+                    <div class="flex items-start p-3 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg">
+                        <i class="fas fa-lightbulb text-blue-600 mr-3 mt-1"></i>
+                        <div>
+                            <p class="font-medium text-gray-900">Increase Marketing Budget</p>
+                            <p class="text-sm text-gray-600">Allocate 15% more to digital campaigns</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start p-3 bg-gradient-to-r from-green-50 to-green-100 rounded-lg">
+                        <i class="fas fa-cog text-green-600 mr-3 mt-1"></i>
+                        <div>
+                            <p class="font-medium text-gray-900">Optimize Pricing Strategy</p>
+                            <p class="text-sm text-gray-600">Implement dynamic pricing model</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start p-3 bg-gradient-to-r from-purple-50 to-purple-100 rounded-lg">
+                        <i class="fas fa-headset text-purple-600 mr-3 mt-1"></i>
+                        <div>
+                            <p class="font-medium text-gray-900">Enhance Customer Support</p>
+                            <p class="text-sm text-gray-600">Implement 24/7 AI chatbot</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start p-3 bg-gradient-to-r from-yellow-50 to-yellow-100 rounded-lg">
+                        <i class="fas fa-chart-bar text-yellow-600 mr-3 mt-1"></i>
+                        <div>
+                            <p class="font-medium text-gray-900">Focus on Retention</p>
+                            <p class="text-sm text-gray-600">Launch loyalty program</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            loadPredictionCharts();
+        });
+
+        function loadPredictionCharts() {
+            // Sales forecast chart
+            const salesData = {
+                x: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                y: [32000, 35000, 38000, 42000, 45000, 48000, 52000, 55000, 58000, 62000, 65000, 68000],
+                type: 'scatter',
+                mode: 'lines+markers',
+                name: 'Historical',
+                line: {color: '#3B82F6', width: 3}
+            };
+
+            const salesForecast = {
+                x: ['Oct', 'Nov', 'Dec'],
+                y: [62000, 65000, 68000],
+                type: 'scatter',
+                mode: 'lines+markers',
+                name: 'Forecast',
+                line: {color: '#10B981', width: 3, dash: 'dash'}
+            };
+
+            const salesLayout = {
+                title: 'Sales Forecast (Next 3 Months)',
+                xaxis: {title: 'Month'},
+                yaxis: {title: 'Sales ($)'},
+                template: 'plotly_white',
+                height: 320
+            };
+
+            Plotly.newPlot('sales-forecast', [salesData, salesForecast], salesLayout);
+
+            // User prediction chart
+            const userData = {
+                x: ['Q1', 'Q2', 'Q3', 'Q4'],
+                y: [1200, 1500, 1800, 2100],
+                type: 'bar',
+                name: 'Historical',
+                marker: {color: '#3B82F6'}
+            };
+
+            const userForecast = {
+                x: ['Q4', 'Q1'],
+                y: [2100, 2400],
+                type: 'bar',
+                name: 'Prediction',
+                marker: {color: '#10B981'}
+            };
+
+            const userLayout = {
+                title: 'User Growth Prediction',
+                xaxis: {title: 'Quarter'},
+                yaxis: {title: 'Users'},
+                template: 'plotly_white',
+                height: 320
+            };
+
+            Plotly.newPlot('user-prediction', [userData, userForecast], userLayout);
+        }
+    </script>
+</body>
+</html> 

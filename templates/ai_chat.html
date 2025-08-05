@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chat - Business Analytics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <i class="fas fa-brain text-2xl mr-3"></i>
+                    <h1 class="text-xl font-bold">AI Dashboard</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="/" class="hover:text-gray-200 transition">Dashboard</a>
+                    <a href="/analytics" class="hover:text-gray-200 transition">Analytics</a>
+                    <a href="/predictions" class="hover:text-gray-200 transition">Predictions</a>
+                    <a href="/ai-chat" class="hover:text-gray-200 transition">AI Chat</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="bg-white rounded-lg shadow-lg">
+            <!-- Chat Header -->
+            <div class="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6 rounded-t-lg">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center mr-4">
+                        <i class="fas fa-robot text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold">AI Business Assistant</h2>
+                        <p class="text-blue-100">Ask me anything about your business analytics and insights</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Messages -->
+            <div id="chat-messages" class="h-96 overflow-y-auto p-6 space-y-4">
+                <!-- Welcome message -->
+                <div class="flex items-start space-x-3">
+                    <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                        <i class="fas fa-robot text-white text-sm"></i>
+                    </div>
+                    <div class="bg-blue-50 rounded-lg p-3 max-w-xs">
+                        <p class="text-sm text-gray-800">
+                            Hello! I'm your AI business assistant. I can help you analyze data, provide insights, and answer questions about your business metrics. What would you like to know?
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Input -->
+            <div class="border-t border-gray-200 p-6">
+                <div class="flex space-x-4">
+                    <input type="text" id="message-input" 
+                           class="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                           placeholder="Ask me about sales, users, trends, or any business insights...">
+                    <button id="send-button" 
+                            class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition flex items-center">
+                        <i class="fas fa-paper-plane mr-2"></i>
+                        Send
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="mt-8">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Quick Questions</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <button class="quick-question bg-white p-4 rounded-lg shadow border hover:shadow-lg transition text-left"
+                        data-question="What are the current sales trends?">
+                    <i class="fas fa-chart-line text-blue-600 mr-2"></i>
+                    Sales Trends
+                </button>
+                <button class="quick-question bg-white p-4 rounded-lg shadow border hover:shadow-lg transition text-left"
+                        data-question="How are our user growth metrics performing?">
+                    <i class="fas fa-users text-green-600 mr-2"></i>
+                    User Growth
+                </button>
+                <button class="quick-question bg-white p-4 rounded-lg shadow border hover:shadow-lg transition text-left"
+                        data-question="What recommendations do you have for improving conversion rates?">
+                    <i class="fas fa-lightbulb text-yellow-600 mr-2"></i>
+                    Conversion Tips
+                </button>
+                <button class="quick-question bg-white p-4 rounded-lg shadow border hover:shadow-lg transition text-left"
+                        data-question="What are the key factors affecting customer satisfaction?">
+                    <i class="fas fa-smile text-purple-600 mr-2"></i>
+                    Customer Satisfaction
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            const chatMessages = $('#chat-messages');
+            const messageInput = $('#message-input');
+            const sendButton = $('#send-button');
+
+            // Send message function
+            function sendMessage(message) {
+                // Add user message
+                const userMessage = `
+                    <div class="flex items-start space-x-3 justify-end">
+                        <div class="bg-blue-600 rounded-lg p-3 max-w-xs">
+                            <p class="text-sm text-white">${message}</p>
+                        </div>
+                        <div class="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user text-white text-sm"></i>
+                        </div>
+                    </div>
+                `;
+                chatMessages.append(userMessage);
+
+                // Show loading indicator
+                const loadingMessage = `
+                    <div class="flex items-start space-x-3">
+                        <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-robot text-white text-sm"></i>
+                        </div>
+                        <div class="bg-blue-50 rounded-lg p-3 max-w-xs">
+                            <div class="flex space-x-1">
+                                <div class="w-2 h-2 bg-blue-600 rounded-full animate-bounce"></div>
+                                <div class="w-2 h-2 bg-blue-600 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
+                                <div class="w-2 h-2 bg-blue-600 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                chatMessages.append(loadingMessage);
+
+                // Scroll to bottom
+                chatMessages.scrollTop(chatMessages[0].scrollHeight);
+
+                // Send to API
+                $.ajax({
+                    url: '/api/chat',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ message: message }),
+                    success: function(data) {
+                        // Remove loading message
+                        chatMessages.find('.bg-blue-50').last().remove();
+                        
+                        // Add AI response
+                        const aiMessage = `
+                            <div class="flex items-start space-x-3">
+                                <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-robot text-white text-sm"></i>
+                                </div>
+                                <div class="bg-blue-50 rounded-lg p-3 max-w-xs">
+                                    <p class="text-sm text-gray-800">${data.response}</p>
+                                </div>
+                            </div>
+                        `;
+                        chatMessages.append(aiMessage);
+                        
+                        // Scroll to bottom
+                        chatMessages.scrollTop(chatMessages[0].scrollHeight);
+                    },
+                    error: function() {
+                        // Remove loading message
+                        chatMessages.find('.bg-blue-50').last().remove();
+                        
+                        // Add error message
+                        const errorMessage = `
+                            <div class="flex items-start space-x-3">
+                                <div class="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-exclamation-triangle text-white text-sm"></i>
+                                </div>
+                                <div class="bg-red-50 rounded-lg p-3 max-w-xs">
+                                    <p class="text-sm text-red-800">Sorry, I couldn't process your request. Please try again.</p>
+                                </div>
+                            </div>
+                        `;
+                        chatMessages.append(errorMessage);
+                        
+                        // Scroll to bottom
+                        chatMessages.scrollTop(chatMessages[0].scrollHeight);
+                    }
+                });
+            }
+
+            // Send button click
+            sendButton.click(function() {
+                const message = messageInput.val().trim();
+                if (message) {
+                    sendMessage(message);
+                    messageInput.val('');
+                }
+            });
+
+            // Enter key press
+            messageInput.keypress(function(e) {
+                if (e.which === 13) {
+                    const message = messageInput.val().trim();
+                    if (message) {
+                        sendMessage(message);
+                        messageInput.val('');
+                    }
+                }
+            });
+
+            // Quick question buttons
+            $('.quick-question').click(function() {
+                const question = $(this).data('question');
+                messageInput.val(question);
+                sendMessage(question);
+                messageInput.val('');
+            });
+        });
+    </script>
+</body>
+</html> 

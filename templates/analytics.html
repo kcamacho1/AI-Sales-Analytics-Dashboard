@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - AI Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <i class="fas fa-brain text-2xl mr-3"></i>
+                    <h1 class="text-xl font-bold">AI Dashboard</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="/" class="hover:text-gray-200 transition">Dashboard</a>
+                    <a href="/analytics" class="hover:text-gray-200 transition">Analytics</a>
+                    <a href="/predictions" class="hover:text-gray-200 transition">Predictions</a>
+                    <a href="/ai-chat" class="hover:text-gray-200 transition">AI Chat</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Header -->
+        <div class="mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-2">Advanced Analytics</h2>
+            <p class="text-gray-600">Deep dive into your data with AI-powered insights</p>
+        </div>
+
+        <!-- Customer Segmentation -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h3 class="text-xl font-semibold text-gray-900 mb-4">Customer Segmentation Analysis</h3>
+            <div id="segments-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Segments will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Advanced Charts -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">Correlation Analysis</h3>
+                <div id="correlation-chart" class="h-80"></div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">Monthly Trends</h3>
+                <div id="monthly-chart" class="h-80"></div>
+            </div>
+        </div>
+
+        <!-- AI Insights Panel -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h3 class="text-xl font-semibold text-gray-900 mb-4">AI-Powered Insights</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-gradient-to-r from-blue-50 to-blue-100 p-4 rounded-lg">
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-chart-line text-blue-600 text-xl mr-2"></i>
+                        <h4 class="font-semibold text-gray-900">Trend Analysis</h4>
+                    </div>
+                    <div id="trend-insights" class="text-sm text-gray-700">
+                        <div class="animate-pulse">
+                            <div class="h-4 bg-gray-200 rounded mb-2"></div>
+                            <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-r from-green-50 to-green-100 p-4 rounded-lg">
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-users text-green-600 text-xl mr-2"></i>
+                        <h4 class="font-semibold text-gray-900">Customer Behavior</h4>
+                    </div>
+                    <div id="behavior-insights" class="text-sm text-gray-700">
+                        <div class="animate-pulse">
+                            <div class="h-4 bg-gray-200 rounded mb-2"></div>
+                            <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-r from-purple-50 to-purple-100 p-4 rounded-lg">
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-lightbulb text-purple-600 text-xl mr-2"></i>
+                        <h4 class="font-semibold text-gray-900">Recommendations</h4>
+                    </div>
+                    <div id="recommendations" class="text-sm text-gray-700">
+                        <div class="animate-pulse">
+                            <div class="h-4 bg-gray-200 rounded mb-2"></div>
+                            <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Metrics -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-blue-100">
+                        <i class="fas fa-chart-bar text-blue-600"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm text-gray-600">Data Points</p>
+                        <p class="text-2xl font-bold text-gray-900" id="data-points">Loading...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-green-100">
+                        <i class="fas fa-clock text-green-600"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm text-gray-600">Processing Time</p>
+                        <p class="text-2xl font-bold text-gray-900" id="processing-time">Loading...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-yellow-100">
+                        <i class="fas fa-robot text-yellow-600"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm text-gray-600">AI Accuracy</p>
+                        <p class="text-2xl font-bold text-gray-900" id="ai-accuracy">Loading...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-purple-100">
+                        <i class="fas fa-brain text-purple-600"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm text-gray-600">Insights Generated</p>
+                        <p class="text-2xl font-bold text-gray-900" id="insights-count">Loading...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            loadSegments();
+            loadCharts();
+            loadInsights();
+            loadMetrics();
+        });
+
+        function loadSegments() {
+            $.get('/api/segments', function(data) {
+                const container = $('#segments-container');
+                container.empty();
+                
+                Object.entries(data).forEach(([clusterName, clusterData]) => {
+                    const segmentCard = `
+                        <div class="bg-gradient-to-r from-blue-50 to-purple-50 p-4 rounded-lg border">
+                            <h4 class="font-semibold text-gray-900 mb-2">${clusterName}</h4>
+                            <div class="space-y-1 text-sm">
+                                <p><span class="font-medium">Size:</span> ${clusterData.size} customers</p>
+                                <p><span class="font-medium">Avg Purchase:</span> $${clusterData.avg_purchase.toFixed(2)}</p>
+                                <p><span class="font-medium">Avg Frequency:</span> ${clusterData.avg_frequency.toFixed(1)}</p>
+                                <p><span class="font-medium">AI Interactions:</span> ${clusterData.avg_ai_interactions.toFixed(1)}</p>
+                                <p><span class="font-medium">Satisfaction:</span> ${clusterData.avg_satisfaction.toFixed(1)}/5</p>
+                            </div>
+                        </div>
+                    `;
+                    container.append(segmentCard);
+                });
+            });
+        }
+
+        function loadCharts() {
+            // Correlation chart
+            $.get('/api/chart/heatmap', function(data) {
+                Plotly.newPlot('correlation-chart', JSON.parse(data.chart_data));
+            });
+
+            // Monthly chart
+            $.get('/api/chart/bar?data_type=sales', function(data) {
+                Plotly.newPlot('monthly-chart', JSON.parse(data.chart_data));
+            });
+        }
+
+        function loadInsights() {
+            // Trend insights
+            $.get('/api/insights/sales', function(data) {
+                $('#trend-insights').html(`
+                    <p class="mb-2"><strong>Trend:</strong> ${data.trend}</p>
+                    <p class="mb-2"><strong>Confidence:</strong> ${(data.confidence * 100).toFixed(1)}%</p>
+                    <p><strong>Prediction:</strong> ${data.prediction}</p>
+                `);
+            });
+
+            // Behavior insights
+            $.get('/api/insights/users', function(data) {
+                $('#behavior-insights').html(`
+                    <p class="mb-2"><strong>Pattern:</strong> ${data.trend}</p>
+                    <p class="mb-2"><strong>Reliability:</strong> ${(data.confidence * 100).toFixed(1)}%</p>
+                    <p><strong>Forecast:</strong> ${data.prediction}</p>
+                `);
+            });
+
+            // Recommendations
+            $.get('/api/insights/ai_performance', function(data) {
+                $('#recommendations').html(`
+                    <p class="mb-2"><strong>Status:</strong> ${data.trend}</p>
+                    <p class="mb-2"><strong>Accuracy:</strong> ${(data.confidence * 100).toFixed(1)}%</p>
+                    <p><strong>Outlook:</strong> ${data.prediction}</p>
+                `);
+            });
+        }
+
+        function loadMetrics() {
+            // Simulate loading metrics
+            $('#data-points').text('1,247');
+            $('#processing-time').text('2.3s');
+            $('#ai-accuracy').text('94.2%');
+            $('#insights-count').text('156');
+        }
+    </script>
+</body>
+</html> 
